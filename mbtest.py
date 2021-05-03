@@ -13,6 +13,7 @@ class Ui_Login(object):
         pass it to newly opened window to sender_line QLineEdit which is used also as login to email services
         '''
         self.ui.sender_line.setText(Ui_Login.log_me_mail(self))
+        self.ui.sender_line.setReadOnly(True) #prevent from changing and using another credentials
 
 
     def setupUi(self, Login):
@@ -64,12 +65,16 @@ class Ui_Login(object):
         self.sign_in_btn.setText(_translate("Login", "Sign In"))
 
     def log_me_mail(self):
-        mm = self.email_input.text()
-        return mm
+        lmm = self.email_input.text()
+        return lmm
+
+    def pass_me_mail(self):
+        pmm = self.pass_input.text()
+        return pmm
 
     #function to login to gmail mail services
     def log_me(self):
-        pass_input = self.pass_input.text()
+        pass_input = self.pass_me_mail()
         email_input = self.log_me_mail() #take email.input.text from log_me_mail method and pass it to email_input variable
         context = ssl.create_default_context()
         smtp_server = "smtp.gmail.com"
@@ -80,7 +85,6 @@ class Ui_Login(object):
 
 
 class Ui_MailerDaemon(object):
-
     def setupUi(self, MailerDaemon):
         MailerDaemon.setObjectName("MailerDaemon")
         MailerDaemon.resize(498, 667)
@@ -116,17 +120,8 @@ class Ui_MailerDaemon(object):
         self.sender_label.setFont(font)
         self.sender_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.sender_label.setObjectName("sender_label")
-        self.to_label = QtWidgets.QLabel(MailerDaemon)
-        self.to_label.setGeometry(QtCore.QRect(10, 130, 61, 16))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.to_label.setFont(font)
-        self.to_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.to_label.setObjectName("to_label")
         self.bcc_label = QtWidgets.QLabel(MailerDaemon)
-        self.bcc_label.setGeometry(QtCore.QRect(10, 160, 61, 16))
+        self.bcc_label.setGeometry(QtCore.QRect(10, 130, 61, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -135,19 +130,15 @@ class Ui_MailerDaemon(object):
         self.bcc_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.bcc_label.setObjectName("bcc_label")
         self.subject_line = QtWidgets.QLineEdit(MailerDaemon)
-        self.subject_line.setGeometry(QtCore.QRect(90, 70, 331, 20))
+        self.subject_line.setGeometry(QtCore.QRect(90, 70, 351, 20))
         self.subject_line.setStyleSheet("background-color: rgb(231, 231, 231)")
         self.subject_line.setObjectName("subject_line")
         self.sender_line = QtWidgets.QLineEdit(MailerDaemon)
-        self.sender_line.setGeometry(QtCore.QRect(90, 100, 331, 20))
+        self.sender_line.setGeometry(QtCore.QRect(90, 100, 351, 20))
         self.sender_line.setStyleSheet("background-color: rgb(231, 231, 231)")
         self.sender_line.setObjectName("sender_line")
-        self.to_line = QtWidgets.QLineEdit(MailerDaemon)
-        self.to_line.setGeometry(QtCore.QRect(90, 130, 331, 20))
-        self.to_line.setStyleSheet("background-color: rgb(231, 231, 231)")
-        self.to_line.setObjectName("to_line")
         self.bcc_line = QtWidgets.QLineEdit(MailerDaemon)
-        self.bcc_line.setGeometry(QtCore.QRect(90, 160, 331, 20))
+        self.bcc_line.setGeometry(QtCore.QRect(90, 130, 351, 20))
         self.bcc_line.setStyleSheet("background-color: rgb(231, 231, 231)")
         self.bcc_line.setObjectName("bcc_line")
         self.msg_box = QtWidgets.QTextEdit(MailerDaemon)
@@ -164,11 +155,11 @@ class Ui_MailerDaemon(object):
         self.msg_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.msg_label.setObjectName("msg_label")
         self.attach_btn = QtWidgets.QPushButton(MailerDaemon)
-        self.attach_btn.setGeometry(QtCore.QRect(10, 560, 161, 23))
+        self.attach_btn.setGeometry(QtCore.QRect(90, 560, 161, 23))
         self.attach_btn.setStyleSheet("background-color: rgb(231, 231, 231)")
         self.attach_btn.setObjectName("attach_btn")
         self.attach_view = QtWidgets.QListView(MailerDaemon)
-        self.attach_view.setGeometry(QtCore.QRect(10, 590, 161, 71))
+        self.attach_view.setGeometry(QtCore.QRect(90, 590, 351, 71))
         self.attach_view.setStyleSheet("background-color: rgb(231, 231, 231)")
         self.attach_view.setObjectName("attach_view")
         self.send_msg_btn = QtWidgets.QPushButton(MailerDaemon)
@@ -176,13 +167,14 @@ class Ui_MailerDaemon(object):
         self.send_msg_btn.setStyleSheet("background-color: rgb(231, 231, 231)")
         self.send_msg_btn.setObjectName("send_msg_btn")
         self.file_btn = QtWidgets.QPushButton(MailerDaemon)
-        self.file_btn.setGeometry(QtCore.QRect(430, 160, 61, 21))
+        self.file_btn.setGeometry(QtCore.QRect(380, 160, 61, 21))
         self.file_btn.setStyleSheet("background-color: rgb(231, 231, 231)")
         self.file_btn.setObjectName("file_btn")
         self.upload_label = QtWidgets.QLabel(MailerDaemon)
-        self.upload_label.setGeometry(QtCore.QRect(360, 190, 131, 20))
+        self.upload_label.setGeometry(QtCore.QRect(230, 160, 141, 20))
         self.upload_label.setStyleSheet("color: rgb(231, 231, 231)")
         self.upload_label.setObjectName("upload_label")
+
         self.retranslateUi(MailerDaemon)
         QtCore.QMetaObject.connectSlotsByName(MailerDaemon)
 
@@ -192,17 +184,24 @@ class Ui_MailerDaemon(object):
         self.mailer_label.setText(_translate("MailerDaemon", "MailerDaemon"))
         self.subject_label.setText(_translate("MailerDaemon", "Subject"))
         self.sender_label.setText(_translate("MailerDaemon", "Sender"))
-        self.to_label.setText(_translate("MailerDaemon", "To"))
-        self.bcc_label.setText(_translate("MailerDaemon", "Bcc"))
+        self.bcc_label.setText(_translate("MailerDaemon", "To Bcc"))
         self.msg_label.setText(_translate("MailerDaemon", "Message"))
         self.attach_btn.setText(_translate("MailerDaemon", "Add Attachment"))
         self.send_msg_btn.setText(_translate("MailerDaemon", "Send Message"))
         self.file_btn.setText(_translate("MailerDaemon", "File"))
-        self.upload_label.setText(_translate("MailerDaemon", "Upload receivers from file"))
+        self.upload_label.setText(_translate("MailerDaemon", "Upload recipients from file"))
 
-    def sender(self):
-        sdr = LoginRef()
-        print(sdr)
+    '''function that sends all headers of an email to multiple recipients'''
+    def send_msg(self):
+        pass_input = self.pass_me_mail()
+        email_input = self.log_me_mail() #take email.input.text from log_me_mail method and pass it to email_input variable
+        context = ssl.create_default_context()
+        smtp_server = "smtp.gmail.com"
+        port = 465
+        server = smtplib.SMTP_SSL(smtp_server, port, context=context)
+        server.login(email_input, pass_input)
+        print('logged in succesfully')
+
 
 
 

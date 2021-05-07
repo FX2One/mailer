@@ -85,14 +85,27 @@ class Ui_Login(object):
 
 
 class Ui_MailerDaemon(object):
+    def selectFile(self):
+        file_dialog = QtWidgets.QFileDialog.getOpenFileName()
+        fd_path = file_dialog[0]  # take first element of tuple
+        file_set_text = self.file_line.setText(fd_path)  # pass path name to file_line when file is selected
+
+        def pass_file_text(selectFile):
+            my_file = open(fd_path)
+            return my_file.read()
+
+        file_set_file = self.bcc_line.setText(pass_file_text(self))
+        return pass_file_text(self.selectFile)
+
     def setupUi(self, MailerDaemon):
         MailerDaemon.setObjectName("MailerDaemon")
-        MailerDaemon.resize(498, 667)
+        MailerDaemon.resize(501, 667)
         font = QtGui.QFont()
+        font.setPointSize(10)
         font.setBold(False)
         font.setWeight(50)
         MailerDaemon.setFont(font)
-        MailerDaemon.setStyleSheet("background-color: rgb(139, 139, 139)")
+        MailerDaemon.setStyleSheet("background-color: rgb(139, 139, 139); font-size:10pt")
         self.mailer_label = QtWidgets.QLabel(MailerDaemon)
         self.mailer_label.setGeometry(QtCore.QRect(130, -10, 231, 61))
         font = QtGui.QFont()
@@ -156,6 +169,11 @@ class Ui_MailerDaemon(object):
         self.msg_label.setObjectName("msg_label")
         self.attach_btn = QtWidgets.QPushButton(MailerDaemon)
         self.attach_btn.setGeometry(QtCore.QRect(90, 560, 161, 23))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.attach_btn.setFont(font)
         self.attach_btn.setStyleSheet("background-color: rgb(231, 231, 231)")
         self.attach_btn.setObjectName("attach_btn")
         self.attach_view = QtWidgets.QListView(MailerDaemon)
@@ -168,12 +186,27 @@ class Ui_MailerDaemon(object):
         self.send_msg_btn.setObjectName("send_msg_btn")
         self.file_btn = QtWidgets.QPushButton(MailerDaemon)
         self.file_btn.setGeometry(QtCore.QRect(380, 160, 61, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.file_btn.setFont(font)
         self.file_btn.setStyleSheet("background-color: rgb(231, 231, 231)")
         self.file_btn.setObjectName("file_btn")
         self.upload_label = QtWidgets.QLabel(MailerDaemon)
-        self.upload_label.setGeometry(QtCore.QRect(230, 160, 141, 20))
+        self.upload_label.setGeometry(QtCore.QRect(280, 190, 161, 20))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.upload_label.setFont(font)
         self.upload_label.setStyleSheet("color: rgb(231, 231, 231)")
         self.upload_label.setObjectName("upload_label")
+        self.file_line = QtWidgets.QLineEdit(MailerDaemon)
+        self.file_line.setGeometry(QtCore.QRect(90, 160, 271, 20))
+        self.file_line.setStyleSheet("background-color: rgb(231, 231, 231)")
+        self.file_line.setObjectName("file_line")
+        self.file_btn.clicked.connect(self.selectFile)
 
         self.retranslateUi(MailerDaemon)
         QtCore.QMetaObject.connectSlotsByName(MailerDaemon)
